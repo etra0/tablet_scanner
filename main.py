@@ -6,7 +6,7 @@ import asyncio
 
 app = FastAPI()
 
-COLOR_QUEUE = asyncio.Queue()
+COLOR = ""
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root():
@@ -22,14 +22,18 @@ async def read_server():
 
 @app.websocket('/ws/server')
 async def websocket_server(ws: WebSocket):
+    global COLOR
     await ws.accept()
     while True:
-        color = await ws.receive_text()
-        await COLOR_QUEUE.put(color)
+        COLOR = await ws.receive_text()
 
 @app.websocket('/ws/client')
 async def websocket_client(ws: WebSocket):
     await ws.accept()
+    last_color = ''
     while True:
-        new_color = await COLOR_QUEUE.get()
-        await ws.send_text(new_color)
+        if COLOR == last_color:
+            await asyncio.sleep(0.1)
+        else:
+            await ws.send_text(COLOR)
+            last_color = COLOR
