@@ -1,0 +1,17 @@
+name: android_scanner
+version: 0.1.0
+
+authors:
+  - Sebastián Aedo <your-email-here>
+
+targets:
+  android_scanner:
+    main: src/android_scanner.cr
+
+dependencies:
+  kemal:
+    github: kemalcr/kemal
+
+crystal: '>= 1.13.3'
+
+license: MIT

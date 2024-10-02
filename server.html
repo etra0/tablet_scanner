@@ -9,19 +9,18 @@
         <p>Choose background color</p>
 
         <div>
-            <input type="color" id="corrected" name="corrected" value="#e66465" />
+            <input type="color" id="corrected" name="corrected" value="#FFFFFF" />
             <label for="corrected">Autocorrected color</label>
         </div>
 
         <div>
-            <input type="color" id="raw" name="raw" value="#e66465" />
+            <input type="color" id="raw" name="raw" value="#FFFFFF" />
             <label for="raw">Raw color</label>
         </div>
 
         <script>
-let initial_color = "#e66465";
 function handle_websocket() {
-    const socket = new WebSocket("ws://localhost:8000/ws/server");
+    const socket = new WebSocket(`ws://${window.location.host}/ws/server`)
 
     socket.addEventListener("open", () => {})
     const corrected_color = document.getElementById("corrected");
