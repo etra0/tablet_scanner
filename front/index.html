@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Tablet scanner</title>
+        <script>
+
+async function get_color() {
+    const request_options = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+    }
+
+    const resp = await fetch(`http://${window.location.host}/color`, request_options)
+    const json = await resp.json()
+    return json
+
+}
+async function handle_websocket() {
+    while (true) {
+        const color = await get_color();
+        document.body.style.backgroundColor = color.color
+        await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+}
+
+handle_websocket();
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

@@ -1,12 +1,12 @@
-name: android_scanner
+name: tablet_scanner
 version: 0.1.0
 
 authors:
-  - Sebastián Aedo <your-email-here>
+  - Sebastián Aedo <me@etra0.lat>
 
 targets:
-  android_scanner:
-    main: src/android_scanner.cr
+  tablet_scanner:
+    main: src/tablet_scanner.cr
 
 dependencies:
   kemal:
