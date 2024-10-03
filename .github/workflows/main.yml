@@ -25,7 +25,7 @@ jobs:
         tar -zcvf tablet_scanner-${{ matrix.os }}-${{ github.ref_name}}.tar.gz tablet_scanner
 
     - name: "Upload artifact"
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}
         path: tablet_scanner-${{ matrix.os }}-${{ github.ref_name}}.tar.gz
@@ -47,7 +47,7 @@ jobs:
         tar -a -c -f tablet_scanner-windows-${{ github.ref_name }}.zip tablet_scanner.exe
 
     - name: "Upload artifact"
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: windows-latest
         path: tablet_scanner-windows-${{ github.ref_name }}.zip
@@ -58,13 +58,10 @@ jobs:
 
     steps:
     - name: "Download binaries"
-      uses: actions/download-artifact@v2
-
-    - name: "Move binaries"
-      run: |
-        mv ubuntu-latest/tablet_scanner-ubuntu-latest-${{ github.ref_name }}.tar.gz tablet_scanner-linux-${{ github.ref_name }}.tar.gz
-        mv macos-latest/tablet_scanner-macos-latest-${{ github.ref_name }}.tar.gz .
-        mv windows-latest/tablet_scanner-windows-${{ github.ref_name }}.zip .
+      uses: actions/download-artifact@v4
+      with:
+        merge-multiple: true
+        path: "artifacts/"
 
     - name: "Automatic Release"
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -73,5 +70,5 @@ jobs:
         prerelease: false
         title: "${{ github.ref_name }}"
         files: |
-          tablet_scanner-*.tar.gz
-          tablet_scanner-*.zip
+          artifacts/tablet_scanner-*.tar.gz
+          artifacts/tablet_scanner-*.zip
